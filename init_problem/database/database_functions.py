@@ -4,9 +4,9 @@ from sqlite3 import Error
 import sqlite3
 from ..tex.path_tex import path_chapter
 
-def db_file(chapter, post_type):
-    chapter_path = path_chapter(chapter.lower(), post_type)
-    path_database = os.path.join(chapter_path, f'{post_type}.db')
+def db_file(chapter, post_type, format_problem):
+    chapter_path = path_chapter(chapter.lower(), post_type, format_problem)
+    path_database = os.path.join(chapter_path, f'{post_type}_{format_problem.lower()}.db')
     return path_database
 
 
@@ -25,8 +25,8 @@ def create_connection(db_file):
 
 
 
-def createDatabase(chapter, post_type):
-    database = create_connection(db_file(chapter, post_type))
+def createDatabase(chapter, post_type, format_problem):
+    database = create_connection(db_file(chapter, post_type, format_problem))
 
     #cursor = database.cursor()
     if post_type == 'equation':

@@ -8,8 +8,6 @@ from .database.insert_data import insertData
 from .database.get_data import getData
 from .print_functions import print_problem
 from .print_functions import bat_file
-from .tex.problem_tex import problem_preamble
-from .tex.problem_tex import problem_head
 from .choice_option import ChoiceOption
 
 
@@ -73,21 +71,18 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 def main(chapter, format_problem, size, problem_number, append_to_database):
     if append_to_database:
         try:
-            problem_number = getData(chapter, 'problem')[0][0] + 1
+            problem_number = getData(chapter, 'problem', format_problem)[0][0] + 1
         except:
             problem_number = 1
-        insertData(chapter, 'problem')
+        insertData(chapter, 'problem', format_problem)
     else:
         problem_number = eqn_number_without_database
 
-    path_without_format_problem = os.path.join(
-            path_chapter(chapter.lower(), 'problem'),
-            f'{format_problem.lower()}'
+    path_problem= os.path.join(
+            path_chapter(chapter.lower(), 'problem', format_problem),
+            f'problem-{problem_number:02}'
             )
     
-    path_problem = os.path.join(
-           path_without_format_problem, f'problem-{problem_number:02}'
-           )
 
     os.makedirs(path_problem, exist_ok=True)
     main_tex = os.path.join(path_problem, 'main.tex')

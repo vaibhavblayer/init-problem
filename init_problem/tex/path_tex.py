@@ -71,7 +71,7 @@ problem_type = [
 chapters = chapters_mechanics + chapters_electrodynamics + chapters_modern_physics + chapters_optics
 
 
-def path_post(chapter_folder, post_type):
+def path_post(chapter_folder, post_type, format_problem):
     if post_type == post_types[0]:
         equation_folder = os.path.join(chapter_folder, post_type)
         os.makedirs(equation_folder, exist_ok=True)
@@ -79,8 +79,9 @@ def path_post(chapter_folder, post_type):
 
     elif post_type == post_types[1]:
         problem_folder = os.path.join(chapter_folder, post_type)
-        os.makedirs(problem_folder, exist_ok=True)
-        return problem_folder
+        problem_folder_with_format_problem = os.path.join(problem_folder, format_problem
+        os.makedirs(problem_folder_with_format_problem, exist_ok=True)
+        return problem_folder_with_format_problem
 
     elif post_type == post_types[2]:
         notes_folder = os.path.join(chapter_folder, post_type)
@@ -93,26 +94,28 @@ def path_post(chapter_folder, post_type):
         return ideas_folder
 
 
-def path_chapter(chapter, post_type):
+def path_chapter(chapter, post_type, format_problem):
     """
     chapter -> name of the chapter
     post_type -> ['equation', 'problem', 'notes', 'db']
+    format_problem -> ['JEE', 'IIT-JEE', 'NEET', 'BOOKS', 'MINE']
     """
+
     if chapter in chapters_mechanics:
         chapter_folder = os.path.join(path_mechanics, chapter)
-        return path_post(chapter_folder, post_type)
+        return path_post(chapter_folder, post_type, format_problem)
 
     elif chapter in chapters_electrodynamics:
         chapter_folder = os.path.join(path_electrodynamics, chapter)
-        return path_post(chapter_folder, post_type)
+        return path_post(chapter_folder, post_type, format_problem)
 
     elif chapter in chapters_modern_physics:
         chapter_folder = os.path.join(path_modern_physics, chapter)
-        return path_post(chapter_folder, post_type)
+        return path_post(chapter_folder, post_type, format_problem)
 
     elif chapter in chapters_optics:
         chapter_folder = os.path.join(path_optics, chapter)
-        return path_post(chapter_folder, post_type)
+        return path_post(chapter_folder, post_type, format_problem)
 
 
 

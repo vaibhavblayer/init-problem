@@ -11,11 +11,11 @@ from .database_functions import db_file
 from .database_functions import create_connection
 from .database_functions import createDatabase
 
-def getData(chapter, post_type):
+def getData(chapter, post_type, format_problem):
 
     try:
 
-        database = create_connection(db_file(chapter, post_type))
+        database = create_connection(db_file(chapter, post_type, format_problem))
         cursor = database.cursor()
 
         if post_type == 'equation':
@@ -40,7 +40,7 @@ def getData(chapter, post_type):
 
     except:
 
-        createDatabase(chapter, post_type)
+        createDatabase(chapter, post_type, foramt_problem)
 
 
 
