@@ -17,6 +17,9 @@ eqn_number_without_database = int(time.strftime("%H%M%S%d%m%Y"))
 
 
 
+size_square = f'\\geometry{{\npaperwidth=5in, \npaperheight=5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
+size_h_rectangle = f'\\geometry{{\npaperwidth=8in, \npaperheight=4.5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
+size_v_rectangle = f'\\geometry{{\npaperwidth=4.5in, \npaperheight=8in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -36,6 +39,16 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         help="Chapter name",
         )
 @click.option(
+        '-s',
+        '--size',
+        prompt='Size',
+        default='square',
+        type=click.Choice(['square', 'h-rectangle', 'v-rectangle']),
+        cls=ChoiceOption,
+        show_default=True,
+        help="Size of the canvas"
+        )
+@click.option(
         '-n',
         '--problem_number',
         type=click.INT
@@ -43,10 +56,13 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option(
         '-a',
         '--append_to_database',
-        is_flag=True,
+        default=True,
+        prompt="Append to database!",
+        type=click.Choice([True, False]),
+        cls=ChoiceOption,
         help="flag (-a turns-on) appends the equation to database"
         )
-def main(chapter, problem_number, append_to_database):
+def main(chapter, size, problem_number, append_to_database):
     if append_to_database:
         try:
             problem_number = getData(chapter, 'problem')[0][0] + 1
@@ -60,10 +76,24 @@ def main(chapter, problem_number, append_to_database):
             path_chapter(chapter.lower(), 'problem'),
             f'problem-{problem_number:02}'
             )
+    
+   
+
     os.makedirs(path_equation, exist_ok=True)
     main_tex = os.path.join(path_equation, 'main.tex')
     with open(main_tex, 'w') as file:
-        file.write(problem_preamble)
+        file.write(f'\\documentclass{{article}}\n')
+        file.write(f'\\usepackage{{v-problem}}\n')
+        if size == 'square':
+            file.write(size_square)
+        elif size == 'h-rectangle':
+            file.write(size_h_rectangle)
+        elif size == 'v-rectangle':
+            file.write(size_v_rectangle)
+
+        file.write(f'\\begin{{document}}\n')
+        file.write(f'{problem_number}')
+        file.write(f'\\end{{document}}\n')
 
     print_problem(problem_number, chapter, main_tex)
     bat_file(main_tex)

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.1.3"
-description = "Fixed imports removed unnecessory imports."
+version = "0.1.5"
+description = "Added multiple sizes square, h-rectangle, v-rectangle"
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
