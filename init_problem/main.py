@@ -17,9 +17,9 @@ eqn_number_without_database = int(time.strftime("%H%M%S%d%m%Y"))
 
 
 
-size_square = f'\\geometry{{\npaperwidth=5in, \npaperheight=5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
-size_h_rectangle = f'\\geometry{{\npaperwidth=8in, \npaperheight=4.5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
-size_v_rectangle = f'\\geometry{{\npaperwidth=4.5in, \npaperheight=8in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm}}\n\n'
+size_square = f'\\geometry{{\npaperwidth=5in, \npaperheight=5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm\n}}\n\n'
+size_h_rectangle = f'\\geometry{{\npaperwidth=8in, \npaperheight=4.5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm\n}}\n\n'
+size_v_rectangle = f'\\geometry{{\npaperwidth=4.5in, \npaperheight=8in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm\n}}\n\n'
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -39,10 +39,18 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         help="Chapter name",
         )
 @click.option(
+        '-f',
+        '--format_problem',
+        prompt='Format',
+        default=1,
+        type=click.Choice(['JEE', 'IIT-JEE', 'NEET', 'BOOK', 'MINE']),
+        help='Format of the problem'
+        )
+@click.option(
         '-s',
         '--size',
         prompt='Size',
-        default='square',
+        default=1,
         type=click.Choice(['square', 'h-rectangle', 'v-rectangle']),
         cls=ChoiceOption,
         show_default=True,
@@ -59,11 +67,9 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         is_flag=True,
         default=True,
         prompt=True,
-        #type=click.Choice(['True', 'False']),
-        #cls=ChoiceOption,
         help="flag (-a turns-on) appends the equation to database"
         )
-def main(chapter, size, problem_number, append_to_database):
+def main(chapter, format_problem, size, problem_number, append_to_database):
     if append_to_database:
         try:
             problem_number = getData(chapter, 'problem')[0][0] + 1
@@ -73,15 +79,17 @@ def main(chapter, size, problem_number, append_to_database):
     else:
         problem_number = eqn_number_without_database
 
-    path_equation = os.path.join(
+    path_without_format_problem = os.path.join(
             path_chapter(chapter.lower(), 'problem'),
             f'problem-{problem_number:02}'
             )
     
-   
+   path_problem = os.path.join(
+           path_without_format_problem, f'{format_problem.lower()}'
+           )
 
-    os.makedirs(path_equation, exist_ok=True)
-    main_tex = os.path.join(path_equation, 'main.tex')
+    os.makedirs(path_problem, exist_ok=True)
+    main_tex = os.path.join(path_problem, 'main.tex')
     with open(main_tex, 'w') as file:
         file.write(f'\\documentclass{{article}}\n')
         file.write(f'\\usepackage{{v-problem}}\n')
@@ -93,7 +101,7 @@ def main(chapter, size, problem_number, append_to_database):
             file.write(size_v_rectangle)
 
         file.write(f'\\begin{{document}}\n')
-        file.write(f'{problem_number}')
+        file.write(f'{problem_number}\n')
         file.write(f'\\end{{document}}\n')
 
     print_problem(problem_number, chapter, main_tex)
