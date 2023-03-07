@@ -84,7 +84,7 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
             f'problem-{problem_number:02}'
             )
     
-   path_problem = os.path.join(
+    path_problem = os.path.join(
            path_without_format_problem, f'{format_problem.lower()}'
            )
 

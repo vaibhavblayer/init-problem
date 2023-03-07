@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.1.8"
-description = "Modified path for format_problem."
+version = "0.1.9"
+description = "Fixed a little bug caused by indentation."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
