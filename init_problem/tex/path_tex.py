@@ -1,10 +1,10 @@
 import os
 
-path_parent = "/Users/vaibhavblayer/10xphysics/physics"
-path_mechanics = "/Users/vaibhavblayer/10xphysics/physics/mechanics"
-path_electrodynamics = "/Users/vaibhavblayer/10xphysics/physics/electrodynamics"
-path_modern_physics = "/Users/vaibhavblayer/10xphysics/physics/modern-physics"
-path_optics = "/Users/vaibhavblayer/10xphysics/physics/optics"
+path_parent = os.environ["TEX_PARENT_PATH"]
+path_mechanics = f'{path_parent}/mechanics'
+path_electrodynamics = f'{path_parent}/electrodynamics'
+path_modern_physics = f'{path_parent}/modern-physics'
+path_optics = f'{path_parent}/optics'
 
 
 modules = [

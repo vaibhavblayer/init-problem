@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.1.0"
-description = "Initiates problem format in tex in various formats."
+version = "0.1.1"
+description = "Added path_parent as environment variable.
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
