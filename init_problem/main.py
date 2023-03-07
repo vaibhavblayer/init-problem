@@ -28,7 +28,7 @@ def chapters_import(module):
     return chapters_name.format(chapter=module)
 
 
-CONTEXT_SETTINGS = dict(help_option_names['-h', '--help'])
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 @click.command(
