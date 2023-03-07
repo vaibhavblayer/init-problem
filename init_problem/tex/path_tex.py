@@ -79,7 +79,7 @@ def path_post(chapter_folder, post_type, format_problem):
 
     elif post_type == post_types[1]:
         problem_folder = os.path.join(chapter_folder, post_type)
-        problem_folder_with_format_problem = os.path.join(problem_folder, format_problem
+        problem_folder_with_format_problem = os.path.join(problem_folder, format_problem)
         os.makedirs(problem_folder_with_format_problem, exist_ok=True)
         return problem_folder_with_format_problem
 
