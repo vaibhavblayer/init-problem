@@ -4,28 +4,18 @@ import time
 
 from .tex.path_tex import path_chapter
 from .tex.path_tex import chapters
-from .tex.path_tex import chapters_mechanics
-from .tex.path_tex import chapters_electrodynamics
-from .tex.path_tex import chapters_modern_physics
-from .tex.path_tex import chapters_optics
 from .database.insert_data import insertData
 from .database.get_data import getData
 from .print_functions import print_problem
 from .print_functions import bat_file
 from .tex.problem_tex import problem_preamble
 from .tex.problem_tex import problem_head
-from .tex.path_tex import modules
 from .choice_option import ChoiceOption
 
 
 eqn_number_without_database = int(time.strftime("%H%M%S%d%m%Y"))
 
-modul = []
 
-
-def chapters_import(module):
-    chapters_name = "chapters_{chapter}"
-    return chapters_name.format(chapter=module)
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -56,8 +46,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         is_flag=True,
         help="flag (-a turns-on) appends the equation to database"
         )
-def main(module,chapter, problem_number, append_to_database):
-    modul = module
+def main(chapter, problem_number, append_to_database):
     if append_to_database:
         try:
             problem_number = getData(chapter, 'problem')[0][0] + 1
