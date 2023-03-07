@@ -56,10 +56,11 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option(
         '-a',
         '--append_to_database',
+        is_flag=True,
         default=True,
-        prompt="Append to database!",
-        type=click.Choice([True, False]),
-        cls=ChoiceOption,
+        prompt=True,
+        #type=click.Choice(['True', 'False']),
+        #cls=ChoiceOption,
         help="flag (-a turns-on) appends the equation to database"
         )
 def main(chapter, size, problem_number, append_to_database):
