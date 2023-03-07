@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.2.1"
-description = "Fixed f string in line 84."
+version = "0.2.2"
+description = "Fixed prompting type numbered."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]

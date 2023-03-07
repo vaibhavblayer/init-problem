@@ -44,6 +44,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         prompt='Format',
         default=1,
         type=click.Choice(['JEE', 'IIT-JEE', 'NEET', 'BOOK', 'MINE']),
+        cls=ChoiceOption,
         help='Format of the problem'
         )
 @click.option(
