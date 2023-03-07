@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.1.9"
-description = "Fixed a little bug caused by indentation."
+version = "0.2.0"
+description = "Change the order of path."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
