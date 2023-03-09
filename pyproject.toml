@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.2.3"
-description = "Fixed database path_ accroding to format_problem"
+version = "0.3.2"
+description = "Rewritten problem class to convert everthing as object oriented."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]

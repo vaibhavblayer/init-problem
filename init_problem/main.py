@@ -2,17 +2,14 @@ import click
 import os
 import time
 
-from .tex.path_tex import path_chapter
-from .tex.path_tex import chapters
-from .database.insert_data import insertData
-from .database.get_data import getData
-from .print_functions import print_problem
-from .print_functions import bat_file
+
+from .chapters import chapters_list
+from .problem import Problem
 from .choice_option import ChoiceOption
 
+path_parent = os.environ["TEX_PARENT_PATH"] 
 
-eqn_number_without_database = int(time.strftime("%H%M%S%d%m%Y"))
-
+eqn_number_without_database = f'{int(time.strftime("%H%M%S%d%m%Y")):14}'
 
 
 size_square = f'\\geometry{{\npaperwidth=5in, \npaperheight=5in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm\n}}\n\n'
@@ -20,7 +17,6 @@ size_h_rectangle = f'\\geometry{{\npaperwidth=8in, \npaperheight=4.5in, \ntop=15
 size_v_rectangle = f'\\geometry{{\npaperwidth=4.5in, \npaperheight=8in, \ntop=15mm, \nbottom=15mm, \nleft=10mm, \nright=10mm\n}}\n\n'
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-
 
 @click.command(
         context_settings = CONTEXT_SETTINGS,
@@ -31,7 +27,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         '--chapter',
         prompt='Chapters',
         type=click.Choice(
-            chapters,
+            chapters_list,
             case_sensitive=False),
         cls=ChoiceOption,
         help="Chapter name",
@@ -69,20 +65,21 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
         help="flag (-a turns-on) appends the equation to database"
         )
 def main(chapter, format_problem, size, problem_number, append_to_database):
+    problem = Problem(format_problem.lower(), chapter, path_parent)
     if append_to_database:
         try:
-            problem_number = getData(chapter, 'problem', format_problem)[0][0] + 1
+            problem_number = problem.get_data(1)[0][0] + 1
         except:
             problem_number = 1
-        insertData(chapter, 'problem', format_problem)
+        problem.insert_data()
     else:
         problem_number = eqn_number_without_database
 
     path_problem= os.path.join(
-            path_chapter(chapter.lower(), 'problem', format_problem),
+            problem.path_problem_format(),
             f'problem-{problem_number:02}'
             )
-    
+
 
     os.makedirs(path_problem, exist_ok=True)
     main_tex = os.path.join(path_problem, 'main.tex')
@@ -100,8 +97,8 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
         file.write(f'{problem_number}\n')
         file.write(f'\\end{{document}}\n')
 
-    print_problem(problem_number, chapter, main_tex)
-    bat_file(main_tex)
+
+    os.system(f'bat {main_tex}')
     time.sleep(1)
     os.system(f'open -a texmaker {main_tex}')
     print('\n\topening texmaker ...\n')
