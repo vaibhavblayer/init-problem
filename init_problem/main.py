@@ -95,7 +95,7 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
 
         file.write(f'\\begin{{document}}\n')
         file.write(f'\\vtitle[{chapter.upper()}]\n\n')
-        file.write(f'\\vproblem[{problem_number}][This is a problem.][2022]\n\n')
+        file.write(f'\\vproblem[{problem_number:02}][This is a problem.][2022]\n\n')
         file.write(f'\\vspace*{{\\fill}}\n\n')
         file.write(f'\\begin{{center}}\n')
         file.write(f'\\begin{{tikzpicture}}\n')
