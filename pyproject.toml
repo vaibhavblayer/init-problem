@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.3.4"
-description = "Added problem command and option command."
+version = "0.3.5"
+description = "Fixed minor bugs."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
