@@ -94,7 +94,16 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
             file.write(size_v_rectangle)
 
         file.write(f'\\begin{{document}}\n')
-        file.write(f'{problem_number}\n')
+        file.write(f'\\vtitle[{chapter.upper()}]\n')
+        file.write(f'\\vproblem[{problem_number}][][]\n')
+        file.write(f'\\vspace*{{\\fill}}\n')
+        file.write(f'\\begin{{center}}\n')
+        file.write(f'\\begin{{tikzpicture}}\n')
+        file.write(f'\\pic at (0, 0){{frame=8cm}};\n')
+        file.write(f'\\end{{tikzpicture}}\n')
+        file.write(f'\\end{{center}}\n')
+        file.write(f'\\vspace*{{\\fill}}\n')
+        file.write(f'\\voption[\n\\begin{{tasks}}(2)\n\\task\n\\task\n\\task\\task\\end{{tasks}}\n]\n')
         file.write(f'\\end{{document}}\n')
 
 

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.3.3"
-description = "Removed everything which was unnecessory."
+version = "0.3.4"
+description = "Added problem command and option command."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]
