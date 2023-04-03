@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "init-problem"
-version = "0.3.7"
-description = "Added problem format as tikz node."
+version = "0.3.8"
+description = "Modified exam and book format."
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "init_problem"}]

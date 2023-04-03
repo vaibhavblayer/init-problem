@@ -128,12 +128,21 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
         file.write(f'\\begin{{document}}\n')
         file.write(f'\\vtitle[{chapter.upper()}]\n\n')
         file.write(f'\\def\\pn{{{problem_number:02}}}\n')
-        file.write(f'\\def\\exam{{{format_problem}}}\n')
-        file.write(f'\\def\\year{{{2022}}}\n')
+		
+        if format_problem == 'BOOK':
+            file.write(f'\\def\\book{{{format_problem}}}\n')
+            file.write(f'\\def\\page{{{2022}}}\n')
+        else:	
+            file.write(f'\\def\\exam{{{format_problem}}}\n')
+            file.write(f'\\def\\year{{{2022}}}\n')
         file.write(f'\\def\\question{{\nProblem\n}}\n')
         file.write(f'{option}\n')
         file.write(f'{diagram}\n')
-        file.write(f'{assemble}')
+        if format_problem == 'BOOK':
+            assemble_book = assemble.replace('exam', 'book').replace('year', 'page')
+            file.write(f'{assemble_book}')
+        else:
+            file.write(f'{assemble}')
         file.write(f'\\end{{document}}\n')
 
 
