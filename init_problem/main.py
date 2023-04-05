@@ -114,6 +114,7 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
 
 
     os.makedirs(path_problem, exist_ok=True)
+    os.makedirs(f'{path_problem}/downloads', exist_ok=True) 
     main_tex = os.path.join(path_problem, 'main.tex')
     with open(main_tex, 'w') as file:
         file.write(f'\\documentclass{{article}}\n')
