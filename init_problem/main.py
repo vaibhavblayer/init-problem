@@ -22,13 +22,12 @@ option=r"""
 }"""
 
 diagram=r"""
-\def\diagram{
 \begin{center}
 \begin{tikzpicture}
 \pic at (0, 0) {frame=5cm};
 \end{tikzpicture}
 \end{center}
-}"""
+"""
 
 
 assemble=r"""
@@ -38,9 +37,15 @@ assemble=r"""
 	\node[question] (q) [right=2mm of n.east] {\question};
 	\tzline[divider]<-0.125, 0> (q.north west)(q.south west);
 	\node[format] (f) at  (q.south east){[\exam \quad \year]};
-	\node[diagram] (d) [below=2cm of q.south] {\diagram};
-	\node[option] (o) [below=1cm of d.south] {\option};
 \end{tikzpicture}	
+\vspace*{\fill}
+"""
+
+qrcode=r"""
+\vspace*{\fill}
+\begin{center}
+	\fbox{\qrcode[height=2cm]{\gdrive}}
+\end{center}
 \vspace*{\fill}
 """
 
@@ -136,19 +141,23 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
         else:	
             file.write(f'\\def\\exam{{{format_problem}}}\n')
             file.write(f'\\def\\year{{{2022}}}\n')
+        file.write(f'\\def\\gdrive{{Link}}\n\n')
         file.write(f'\\def\\question{{\nProblem\n}}\n')
-        file.write(f'{option}\n')
-        file.write(f'{diagram}\n')
+        
         if format_problem == 'BOOK':
             assemble_book = assemble.replace('exam', 'book').replace('year', 'page')
             file.write(f'{assemble_book}')
         else:
+            file.write(f'{option}\n')
             file.write(f'{assemble}')
+        
+        file.write(f'{diagram}\n')
+        file.write(f'{qrcode}\n')
         file.write(f'\\end{{document}}\n')
 
 
     os.system(f'bat {main_tex}')
-    time.sleep(1)
+    click.pause()
     os.system(f'open -a texmaker {main_tex}')
     print('\n\topening texmaker ...\n')
     time.sleep(1)
