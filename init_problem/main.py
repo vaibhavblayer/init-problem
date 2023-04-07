@@ -161,6 +161,7 @@ def main(chapter, format_problem, size, problem_number, append_to_database):
     os.system(f'open -a texmaker {main_tex}')
     print('\n\topening texmaker ...\n')
     time.sleep(1)
+    click.launch("https://drive.google.com/drive/u/5/folders/1-ICIUilvPsc8nkFskk4WWpvKB4vQ3QIV")
 
 
 
