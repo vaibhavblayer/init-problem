@@ -18,7 +18,6 @@ class Problem:
         self.chapter = chapter
         self.parent_path = parent_path
 
-
     def path_problem_format(self):
         '''
         returns the path for respective problem format
@@ -32,23 +31,24 @@ class Problem:
             return f'{self.parent_path}/{modules[2]}/{self.chapter}/problems/{self.problem_format}'
         elif self.chapter in chapters[3]:
             return f'{self.parent_path}/{modules[3]}/{self.chapter}/problems/{self.problem_format}'
-
-
-
+        elif self.chapter in chapters[4]:
+            return f'{self.parent_path}/{modules[4]}/{self.chapter}/problems/{self.problem_format}'
 
     def create_connection(self):
         '''
         creates connection with sqlite database at given path.
         '''
 
-        db_file = f'{self.path_problem_format()}/problem_{self.problem_format}.db'
+        db_file = f'{self.path_problem_format(
+        )}/problem_{self.problem_format}.db'
         try:
+            print(f'Connecting to {db_file}')
             conn = sqlite3.connect(db_file)
+            print(f'Connected to {db_file}')
         except:
             os.makedirs(self.path_problem_format())
 
         return conn
-
 
     def create_database(self):
         '''
@@ -62,37 +62,33 @@ class Problem:
                     chapter TEXT NOT NULL,
                     date TEXT
                 ); """
-                )
+            )
         except Error as e:
             print(e)
 
         database.close()
 
-
     def get_data(self, n):
         try:
             database = self.create_connection()
             cursor = database.cursor()
-            execute_statement = f'SELECT * FROM problem ORDER BY id DESC LIMIT {n};'
+            execute_statement = f'SELECT * FROM problem ORDER BY id DESC LIMIT {
+                n};'
             output = cursor.execute(execute_statement)
             return output.fetchmany(n)
             database.close()
         except:
             self.create_database()
 
-
     def insert_data(self):
         try:
             database = self.create_connection()
             cursor = database.cursor()
             time_date = f'{int(time.strftime("%H%M%S%d%m%Y")):14}'
-            execute_statement = f'INSERT INTO problem(chapter, date) VALUES("{self.chapter}", "{time_date}");'
+            execute_statement = f'INSERT INTO problem(chapter, date) VALUES("{
+                self.chapter}", "{time_date}");'
             cursor.execute(execute_statement)
             database.commit()
             database.close()
         except Error as e:
             print(e)
-
-
-
-
